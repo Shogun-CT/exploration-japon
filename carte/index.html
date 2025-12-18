@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Carte</title>
+
+<style>
+html, body{
+  margin:0;
+  width:100%;
+  height:100%;
+  background:black;
+}
+
+img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+/* 🔴 BOUTON RETOUR (CSS) */
+.back{
+  position:fixed;
+  top:20px;
+  left:20px;
+  z-index:10;
+  padding:10px 18px;
+  background:rgba(20,20,20,0.8);
+  border:1px solid #5a1a1a;
+  color:#f0e6d2;
+  cursor:pointer;
+  border-radius:8px;
+}
+.back:hover{
+  background:rgba(60,20,20,0.9);
+}
+#transition{
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, 
+    rgba(80,60,40,0.9), 
+    rgba(10,10,10,1));
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
+  transition: opacity 0.6s ease;
+}
+
+#transition.active{
+  opacity: 1;
+}
+</style>
+</head>
+<div id="transition"></div>
+
+<body>
+
+<button class="back" onclick="location.href='../v5.html'">
+  戻る
+</button>
+
+<img src="carte_full.jpg" alt="Carte">
+
+<script>
+function goTo(url){
+  const transition = document.getElementById('transition');
+  transition.classList.add('active');
+  setTimeout(() => {
+    window.location.href = url;
+  }, 600);
+}
+</script>
+
+</body>
+</html>

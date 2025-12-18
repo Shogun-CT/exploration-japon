@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Codes à déchiffrer</title>
+
+<style>
+body{
+  margin:0;
+  background:#0d0d0f url('../content_background.jpg') center/cover fixed;
+  color:#f0e6d2;
+  font-family:Segoe UI;
+}
+
+/* Grille 12 emplacements */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4, 1fr);
+  grid-template-rows:repeat(3, 1fr);
+  gap:20px;
+  padding:30px;
+}
+
+/* Carte parchemin */
+.card{
+  border:1px solid #5a1a1a;
+  border-radius:10px;
+  background:radial-gradient(circle, rgba(80,60,40,0.3), rgba(10,10,10,0.95)),
+             url('../parchment_texture.jpg');
+  background-size:cover;
+  cursor:pointer;
+  overflow:hidden;
+}
+
+.card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* Plein écran */
+#viewer{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle, rgba(30,30,30,0.95), black);
+  justify-content:center;
+  align-items:center;
+}
+
+#viewer img{
+  max-width:90%;
+  max-height:90%;
+  border:12px solid rgba(60,40,20,0.8);
+  animation: parchmentUnroll 0.8s ease;
+}
+
+@keyframes parchmentUnroll{
+  from{transform:scaleY(0.2);opacity:0}
+  to{transform:scaleY(1);opacity:1}
+}
+/* Bouton retour */
+.back{
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  padding: 10px 18px;
+  background: rgba(20,20,20,0.85);
+  border: 1px solid #5a1a1a;
+  color: #f0e6d2;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 8px;
+  z-index: 999;
+}
+
+.back:hover{
+  background: rgba(80,20,20,0.95);
+}
+#transition{
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, 
+    rgba(80,60,40,0.9), 
+    rgba(10,10,10,1));
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
+  transition: opacity 0.6s ease;
+}
+
+#transition.active{
+  opacity: 1;
+}
+
+</style>
+
+</head>
+<div id="transition"></div>
+<body>
+
+<button class="back" onclick="location.href='../v5.html'">戻る</button>
+
+<div class="grid">
+
+  <!-- CODE 1 -->
+  <div class="card" onclick="openImg('image1.jpg')">
+    <img src="image1_thumb.jpg">
+  </div>
+
+</div>
+
+<div id="viewer" onclick="this.style.display='none'">
+  <img id="fullImg">
+</div>
+
+<script>
+function openImg(src){
+  viewer.style.display='flex';
+  fullImg.src = src;
+}
+function goTo(url){
+  const transition = document.getElementById('transition');
+  transition.classList.add('active');
+  setTimeout(() => {
+    window.location.href = url;
+  }, 600);
+}
+</script>
+
+</body>
+</html>

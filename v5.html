@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accès sécurisé</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0d0d0f;
+      color: #f0e6d2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    /* PAGE MOT DE PASSE SEULE */
+    #loginPage {
+      position: fixed;
+      inset: 0;
+      background: url('background.jpg') center/cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+
+    /* LOGIN */
+    #loginBox {
+      background: rgba(0,0,0,0.7);
+      padding: 25px;
+      border-radius: 12px;
+      width: 320px;
+      border: 1px solid #5a1a1a;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #5a1a1a;
+      background: #1a1a1d;
+      color: #f0e6d2;
+    }
+
+    button { cursor: pointer; background: #5a1a1a; }
+    button:hover { background: #7a2424; }
+
+    /* CONTENU */
+    #content {
+      display: none;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0,0,0,0.65) url('content_background.jpg') center/cover;
+      padding: 40px;
+      box-sizing: border-box;
+    }
+
+    .folder-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 100%;
+    }
+
+    .folder {
+      width: 480px;
+      padding: 30px;
+      background: radial-gradient(circle at top, rgba(80,60,40,0.35), rgba(10,10,10,0.95)), url('parchment_texture.jpg');
+      background-size: cover;
+      border: 1px solid #5a1a1a;
+      border-radius: 12px;
+      cursor: pointer;
+      text-align: center;
+      transition: 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .folder:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(180,0,0,0.6);
+    }
+
+    .folder img {
+      width: 430px;
+      height: 240px;
+      object-fit: cover;
+    }
+  @keyframes parchmentUnroll {
+      from { transform: scaleY(0.2); opacity: 0; }
+      to { transform: scaleY(1); opacity: 1; }
+    }
+
+    @keyframes inkFade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .folder::before {
+      content: "☩";
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 1.5rem;
+      color: rgba(180,0,0,0.4);
+      pointer-events: none;
+    }
+    /* TRANSITION ENCRE / PARCHEMIN */
+    #transition{
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, 
+        rgba(80,60,40,0.9), 
+        rgba(10,10,10,1));
+      opacity: 0;
+      pointer-events: none;
+      z-index: 999;
+      transition: opacity 0.6s ease;
+    }
+
+    #transition.active{
+      opacity: 1;
+    }
+
+   </style>
+</head>
+<div id="transition"></div>
+<body>
+
+<div id="loginPage">
+  <div id="loginBox">
+  <h2>--/---/-//-.././/.--./.-/.../..././/</h2>
+  <input type="password" id="password" />
+  <button onclick="checkPassword()">Entrer</button>
+  <p id="error" style="display:none;color:red;">Erreur</p>
+  </div>
+</div>
+
+<div id="content">
+  <div class="folder-container">
+
+    <div class="folder" onclick="goTo('codes/index.html')">
+      <img src="codes/icon_codes.jpg" />
+      <p>Codes à déchiffrer</p>
+    </div>
+
+    <div class="folder" onclick="goTo('carte/index.html')">
+      <img src="carte/icon_map.png" />
+      <p>Carte</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const PASSWORD = "2492";
+
+function checkPassword() {
+  if (document.getElementById('password').value === PASSWORD) {
+    document.getElementById('loginPage').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+    sessionStorage.setItem("connected", "yes");
+  } else {
+    document.getElementById('error').style.display = 'block';
+  }
+}
+
+if (sessionStorage.getItem("connected") === "yes") {
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('content').style.display = 'block';
+}
+function goTo(url){
+  const transition = document.getElementById('transition');
+  transition.classList.add('active');
+
+  setTimeout(() => {
+    window.location.href = url;
+  }, 600);
+}
+</script>
+
+</body>
+</html>
+
+<!-- codes/index.html -->
+<!--
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Codes</title>
+<style>
+body{margin:0;background:#0d0d0f;color:#f0e6d2;font-family:Segoe UI;}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr);gap:20px;padding:20px;}
+.card{border:1px solid #5a1a1a;border-radius:8px;cursor:pointer;overflow:hidden;}
+.card img{width:100%;height:100%;object-fit:cover;}
+#viewer{
+      display:none;
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      background: radial-gradient(circle, rgba(30,30,30,0.95), black);
+      justify-content:center;
+      align-items:center;
+      animation: inkFade 0.6s ease;
+    }
+#viewer img{
+      max-width:90%;
+      max-height:90%;
+      border:12px solid rgba(60,40,20,0.8);
+      border-radius:8px;
+      box-shadow: 0 0 40px rgba(0,0,0,0.9);
+      animation: parchmentUnroll 0.8s ease;
+    }
+</style>
+</head>
+<body>
+<div class="grid">
+  <div class="card" onclick="openImg('image1.jpg')"><img src="image1_thumb.jpg"></div>
+</div>
+<div id="viewer" onclick="this.style.display='none'">
+  <img id="fullImg">
+</div>
+<script>
+function openImg(src){document.getElementById('viewer').style.display='flex';document.getElementById('fullImg').src=src;}
+</script>
+</body>
+</html>
+-->
+
+<!-- carte/index.html -->
+<!--
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Carte</title>
+<style>
+body,html{margin:0;width:100%;height:100%;}
+img{width:100%;height:100%;object-fit:cover;}
+</style>
+</head>
+<body>
+<img src="carte_full.jpg" />
+</body>
+</html>
+-->
