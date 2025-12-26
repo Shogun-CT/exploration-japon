@@ -126,12 +126,58 @@
     #transition.active{
       opacity: 1;
     }
+    /* PAGE DE GARDE */
+    #coverPage{
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 2000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .cover-content{
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .cover-content img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Bouton commencer */
+    .cover-content button{
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 14px 28px;
+      font-size: 1.2rem;
+      background: rgba(20,20,20,0.85);
+      border: 1px solid #5a1a1a;
+      color: #f0e6d2;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .cover-content button:hover{
+      background: rgba(90,26,26,0.95);
+    }
 
    </style>
 </head>
 <div id="transition"></div>
 <body>
-
+<div id="coverPage">
+  <div class="cover-content">
+    <img src="cover.jpg" alt="Page de garde">
+    <button onclick="startExploration()">Commencer l’exploration</button>
+  </div>
+</div>
 <div id="loginPage">
   <div id="loginBox">
   <h2>--/---/-//-.././/.--./.-/.../..././/</h2>
@@ -182,6 +228,12 @@ function goTo(url){
     window.location.href = url;
   }, 600);
 }
+  <script>
+function startExploration(){
+  document.getElementById('coverPage').style.display = 'none';
+}
+</script>
+
 </script>
 
 </body>
