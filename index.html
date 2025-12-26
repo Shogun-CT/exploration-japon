@@ -173,6 +173,10 @@
       border-radius: 10px;
       cursor: pointer;
     }
+    .cover-content button{
+      width: auto;
+      display: inline-block;
+    }
 
     .cover-content button:hover{
       background: rgba(90,26,26,0.95);
@@ -215,7 +219,9 @@
 
 <script>
 const PASSWORD = "2492";
-
+  if (sessionStorage.getItem("coverSeen") === "yes") {
+    document.getElementById('coverPage').style.display = 'none';
+  }
 function checkPassword() {
   if (document.getElementById('password').value === PASSWORD) {
     document.getElementById('loginPage').style.display = 'none';
@@ -240,7 +246,9 @@ function goTo(url){
 }
 function startExploration(){
   document.getElementById('coverPage').style.display = 'none';
+  sessionStorage.setItem("coverSeen", "yes");
 }
+  
 
 </script>
 
