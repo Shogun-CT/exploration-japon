@@ -143,10 +143,20 @@
       position: relative;
     }
 
-    .cover-content img{
+    .cover-content{
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .cover-content img{
+      height: 80vh;
+      width: auto;
+      max-width: 90vw;
+      object-fit: contain;
     }
 
     /* Bouton commencer */
@@ -228,11 +238,9 @@ function goTo(url){
     window.location.href = url;
   }, 600);
 }
-  <script>
 function startExploration(){
   document.getElementById('coverPage').style.display = 'none';
 }
-</script>
 
 </script>
 
